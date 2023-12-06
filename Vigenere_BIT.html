@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7"></script>
+
+    <title>Tugas KIJ Vigenere Bit</title>
+
+    <style>
+        .left-align {
+            margin-left: 20px; /* Sesuaikan dengan jumlah margin yang diinginkan */
+        }
+    </style>
+</head>
+<body>
+    <br>
+    <h1 class="left-align">Ini adalah Vigenere Cipher</h1>
+    <p class="left-align">Untuk hasilnya, klik tombol di bawah ini.</p>
+    <br>
+    <br>
+    <h3 class="left-align">Sampel : </h3>
+    <p class="left-align">Jika ingin menyalin teks ini</p>
+    <ul>
+        <li class="left-align">مرحبا بالعالم</li>
+        <li class="left-align">Halo Dunia</li>
+        <li class="left-align">こんにちは世界</li>
+        <li class="left-align">Hello World</li>
+    </ul>
+
+    <script>
+        function vigenereEncrypt(plaintext, key){
+            let encryptedText = "";
+            const keyLength = key.length;
+
+            for (let i = 0; i < plaintext.length; i++){
+                // Konversi string ASCII dengan XOR
+                const encryptedChar = String.fromCharCode(
+                    plaintext.charCodeAt(i) ^ key.charCodeAt(i % keyLength)
+                );
+                encryptedText += encryptedChar;
+            }
+            return encryptedText;
+        }
+
+        function vigenereDecrypt(ciphertext, key){
+            let decryptedText = "";
+            const keyLength = key.length;
+
+            for (let i = 0; i < ciphertext.length; i++){
+                // Konversi string ASCII dengan XOR
+                const decryptedChar = String.fromCharCode(
+                    ciphertext.charCodeAt(i) ^ key.charCodeAt(i % keyLength)
+                );
+                decryptedText += decryptedChar;
+            }
+            return decryptedText;
+        }
+
+        function showMessage() {
+            const plaintext = prompt("Masukkan pesan yang akan dienkripsi:");
+            const key = prompt("Masukkan kunci:");
+
+            // Perintah harus 5 karakter
+            if (key.length < 5) {
+                alert("Panjang minimal 5 karakter untuk kunci!");
+                return;
+            }
+
+            const encryptedText = vigenereEncrypt(plaintext, key);
+            console.log("Plaintext : " + plaintext);
+            console.log("Key : " + key);
+            console.log("Encrypted Text : " + encryptedText);
+
+            const decryptedText = vigenereDecrypt(encryptedText, key);
+            console.log("Decrypted Text : " + decryptedText);
+
+            const message = `Plaintext: ${plaintext} -> Encrypted Text: ${encryptedText} -> Decrypted Text: ${decryptedText}`;
+            
+            Swal.fire({
+                title: 'Hasil Enkripsi dan Dekripsi',
+                text: message,
+                icon: 'info'
+            });
+        }
+    </script>
+
+    <button onclick="showMessage()" class="left-align">Klik untuk Enkripsi dan Dekripsi</button>
+</body>
+</html>
